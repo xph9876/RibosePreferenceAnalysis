@@ -7,12 +7,13 @@ from collections import defaultdict
 
 def main():
     # argparse
-    parser = argparse.ArgumentParser(description='Normalization of nuclear dinucleotide, use get_nuc or get_mito first')
-    parser.add_argument('raw', type=argparse.FileType('r'), help='Dinucleotide matrices, raw file')
+    parser = argparse.ArgumentParser(description='Normalization of rNMP preference analysis')
+    parser.add_argument('raw', type=argparse.FileType('r'), help='rNMP incorporation file for desired chromosome.')
     parser.add_argument('bg', type=argparse.FileType('r'), help='Background frequency')
-    parser.add_argument('-o', type=argparse.FileType('w'),default=sys.stdout, help='Output')
-    parser.add_argument('--group_len', default=0, type=int, choices=[0,4,16], help='Number of rows of which the sum is 1, [4,16,0], 0 means all, default=0')
-    parser.add_argument('--name', help='Name of chromosome in background frequency used for normalize, default = saccer')
+    parser.add_argument('-o', type=argparse.FileType('w'), default=sys.stdout, help='Output to file.')
+    parser.add_argument('--group_len', default=0, type=int, choices=[0,4,16], help='Number of rows of which the sum is 1, [4,16,0]." + \
+                        " if 0 is selected, the sum of all rows would be 1. default = 0')
+    parser.add_argument('--name', help='Name of chromosome in background frequency used for normalization, default = saccer')
     args = parser.parse_args()
 
     name = args.bg.readline().rstrip('\n').split()[1:]

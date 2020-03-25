@@ -19,13 +19,13 @@ def check_chromosome(s, crs, v):
 
 def main():
     # argument parser
-    parser=argparse.ArgumentParser(description='Find specific chromosome(s) from normalized files')
-    parser.add_argument('infile', nargs='+', type=argparse.FileType('r'), default=sys.stdin, help='Normalized files')
-    parser.add_argument('-o', type=argparse.FileType('w'), default=sys.stdout, help='Output, default to stdout')
-    parser.add_argument('-s', default=['chrM'], nargs = '+', help='Strings to capture, default=chrM')
+    parser=argparse.ArgumentParser(description='Find specific chromosome(s) from rNMP incorporation or background frequency files')
+    parser.add_argument('infile', nargs='+', type=argparse.FileType('r'), default=sys.stdin, help='rNMP incorporation of background frequency files')
+    parser.add_argument('-o', type=argparse.FileType('w'), default=sys.stdout, help='Output, default = stdout')
+    parser.add_argument('-s', default=['chrM'], nargs = '+', help='Strings to capture, default = chrM')
     parser.add_argument('-v', action='store_true', help='Select non-matching chromosomes')
     parser.add_argument('-a', action='store_true', help='Append to original file')
-    parser.add_argument('--name', help='Name for the output line, default=inputfilename')
+    parser.add_argument('--name', help='Name for the output line, default = input file name')
     args=parser.parse_args()
 
     # header
