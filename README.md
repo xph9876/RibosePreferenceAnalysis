@@ -5,7 +5,7 @@ This script is used for preference analysis of rNMP incorporation data generated
 
 ## Dependency
 
-Except the Python3 build-in packages. Those packages are needed:
+Except Python3 standard libraries. Those packages are needed:
 
 - Matplotlib
 
