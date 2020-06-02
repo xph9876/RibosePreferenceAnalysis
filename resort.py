@@ -10,9 +10,10 @@ def main():
     parser.add_argument('order', type=argparse.FileType('r'), help='Order needed')
     parser.add_argument('-o', type=argparse.FileType('w'), default=sys.stdout, help='Output file')
     parser.add_argument('-d', default='-', help='Connector of library information, default = \'-\'')
-    parser.add_argument('-c', type=int, default=0, help='Column number of library num, default=0')
+    parser.add_argument('-c', type=int, default=1, help='Column number of library num, default=1')
 
     args = parser.parse_args()
+    args.c -= 1
 
     # get header
     args.o.write(args.infile.readline())
@@ -25,13 +26,10 @@ def main():
 
     # get fs order
     for l in args.order:
-        l = l.rstrip('\n')
-        try:
-            ws = l.split('\t')
-            fs = ws[args.c]
+        ws = l.rstrip('\n').split('\t')
+        fs = ws[args.c]
+        if fs in data:
             args.o.write('{}\t{}'.format(args.d.join(ws), data[fs]))
-        except KeyError:
-            sys.exit('Cannot find library named {} in {}!'.format(fs,args.infile.name))
 
     print('Done!')
 
