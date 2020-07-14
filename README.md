@@ -63,7 +63,15 @@ Except Python3 standard libraries. Those packages are needed:
    1. __--group_len {0,4,16}__  Number of rows of which the sum is 1. If 0 is selected, the sum of all rows will be 1. default = 0.
    1. __--name NAME__  Name of chromosome in background frequency used for normalization, default = saccer
    
-1. Draw preference heatmaps.
+1. Rename and sort libraries if needed
+   ```bash
+   ./resort.py <normalized file> <order file> -o <sorted normalized file>
+   ```
+   Available parameters:
+   1. __-d D__  Connector of library informations, default = '-'
+   2. __-c C__  Column number of library name, default=1
+
+2. Draw preference heatmaps.
    ```bash
    ./draw_ribose.py <normalized file> -o <output basename>
    ```
