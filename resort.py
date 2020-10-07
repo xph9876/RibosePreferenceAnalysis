@@ -11,7 +11,6 @@ def main():
     parser.add_argument('-o', type=argparse.FileType('w'), default=sys.stdout, help='Output file')
     parser.add_argument('-d', default='-', help='Connector of library information, default = \'-\'')
     parser.add_argument('-c', type=int, default=1, help='Column number of library num, default=1')
-
     args = parser.parse_args()
     args.c -= 1
 
@@ -26,11 +25,13 @@ def main():
 
     # get fs order
     for l in args.order:
-        ws = l.rstrip('\n').split('\t')
-        fs = ws[args.c]
-        if fs in data:
+        l = l.rstrip('\n')
+        try:
+            ws = l.split('\t')
+            fs = ws[args.c]
             args.o.write('{}\t{}'.format(args.d.join(ws), data[fs]))
-
+        except KeyError:
+            continue
     print('Done!')
 
 
