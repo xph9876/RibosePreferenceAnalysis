@@ -3,9 +3,12 @@ Preference analysis for ribose-seq data
 
 This script is used for preference analysis of rNMP incorporation data generated from _ribose-seq_ protocol and Ribose-Map software. The neighbor of incorporated rNMP keeps certain preference in a specific species. This is because the surrounding dNMPs could affect the probability of rNMP misincorporation by replicative polymerases. This software is designed to reveal this preference.
 
+## Citation
+Balachander, S., Gombolay, A. L., Yang, T., Xu, P., Newnam, G., Keskin, H., El-Sayed, W., Bryksin, A. V., Tao, S., Bowen, N. E., Schinazi, R. F., Kim, B., Koh, K. D., Vannberg, F. O., & Storici, F. (2020). Ribonucleotide incorporation in yeast genomic DNA shows preference for cytosine and guanosine preceded by deoxyadenosine. _Nature communications, 11_(1), 2447. https://doi.org/10.1038/s41467-020-16152-5
+
 ## Dependency
 
-Except Python3 standard libraries. Those packages are needed:
+Except Python3 standard libraries, the following packages are needed to run the scripts:
 
 - Matplotlib
 
@@ -85,13 +88,11 @@ Except Python3 standard libraries. Those packages are needed:
    1. __--no_annot__  Hide percentage annotation in each cell.
    1. __--cmax CMAX__  Maximum value in color scale. Any preferency beyond that will show as the maximum color.
    
-   ## License
-   
-   This software is under GNU GPL v3.0 license
-   
-   ## Contact
-   
-   If you have any question, please contact me at [pxu64@gatech.edu](mailto:pxu64@gatech.edu).
-   
-   Please give me a star if you like it!
+## License
+
+This software is under GNU GPL v3.0 license
+
+## Contact
+
+If you have any question, please contact me at [pxu64@gatech.edu](mailto:pxu64@gatech.edu).
 
