@@ -161,7 +161,7 @@ def output(results, outputbase):
         if k == 'mono':
             for lib, v1 in v.items():
                 with open('_'.join([outputbase, lib]) + '.mono', 'w') as fw:
-                    fw.write('\t'.join(['Chromosome'] + order['mono']) + '\n')
+                    fw.write('\t'.join(['Sample'] + order['mono']) + '\n')
                     for cr, v2 in v1.items():
                         fw.write(cr + '\t' + '\t'.join(list(map(str, [v2[x] for x in order['mono']]))) + '\n')
         if k == 'dinuc':
@@ -170,13 +170,13 @@ def output(results, outputbase):
                     if o == 'nr':
                         for lib, v1 in v0.items():
                             with open('_'.join([outputbase, lib]) +  f'.{k}_d{d}_nr', 'w') as fw:
-                                fw.write('\t'.join(['Chromosome'] + order['nr']) + '\n')
+                                fw.write('\t'.join(['Sample'] + order['nr']) + '\n')
                                 for cr, v2 in v1.items():
                                     fw.write(cr + '\t' + '\t'.join(list(map(str, [v2[x] for x in order['nr']]))) + '\n')
                     else:
                         for lib, v1 in v0.items():
                             with open('_'.join([outputbase, lib]) +  f'.{k}_d{d}_rn', 'w') as fw:
-                                fw.write('\t'.join(['Chromosome'] + order['rn']) + '\n')
+                                fw.write('\t'.join(['Sample'] + order['rn']) + '\n')
                                 for cr, v2 in v1.items():
                                     fw.write(cr + '\t' + '\t'.join(list(map(str, [v2[x] for x in order['rn']]))) + '\n')
         if k == 'trinuc':
@@ -184,19 +184,19 @@ def output(results, outputbase):
                 if o == 'nnr':
                     for lib, v1 in v0.items():
                         with open('_'.join([outputbase, lib]) + '.trinuc_nnr', 'w') as fw:
-                            fw.write('\t'.join(['Chromosome'] + order['nnr']) + '\n')
+                            fw.write('\t'.join(['Sample'] + order['nnr']) + '\n')
                             for cr, v2 in v1.items():
                                 fw.write(cr + '\t' + '\t'.join(list(map(str, [v2[x] for x in order['nnr']]))) + '\n')
                 elif o=='nrn':
                     for lib, v1 in v0.items():
                         with open('_'.join([outputbase, lib]) + '.trinuc_nrn', 'w') as fw:
-                            fw.write('\t'.join(['Chromosome'] + order['nrn']) + '\n')
+                            fw.write('\t'.join(['Sample'] + order['nrn']) + '\n')
                             for cr, v2 in v1.items():
                                 fw.write(cr + '\t' + '\t'.join(list(map(str, [v2[x] for x in order['nrn']]))) + '\n')
                 else:
                     for lib, v1 in v0.items():
                         with open('_'.join([outputbase, lib]) + '.trinuc_rnn', 'w') as fw:
-                            fw.write('\t'.join(['Chromosome'] + order['rnn']) + '\n')
+                            fw.write('\t'.join(['Sample'] + order['rnn']) + '\n')
                             for cr, v2 in v1.items():
                                 fw.write(cr + '\t' + '\t'.join(list(map(str, [v2[x] for x in order['rnn']]))) + '\n')
 

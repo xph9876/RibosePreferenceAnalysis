@@ -80,7 +80,7 @@ def main():
                     result[chrom][rc(nu)] += count
 
     # output
-    args.o.write('chr\t' + '\t'.join(nuc) + '\n')
+    args.o.write('Sample\t' + '\t'.join(nuc) + '\n')
     for k in sorted(result.keys()):
         args.o.write('{}\t'.format(k) + '\t'.join([str(result[k][i]) for i in nuc]) + '\n')
     print('Done!')

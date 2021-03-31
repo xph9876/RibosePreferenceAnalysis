@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
-from dinucUtils  import *
+from rNMPUtils  import *
 
 def main():
     # argparse
