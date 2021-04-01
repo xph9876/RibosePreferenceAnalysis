@@ -160,7 +160,7 @@ def output(results, outputbase):
     for k,v in results.items():
         if k == 'mono':
             for lib, v1 in v.items():
-                with open(generate_outputname(outputbase, lib)) + '.mono', 'w') as fw:
+                with open(generate_outputname(outputbase, lib) + '.mono', 'w') as fw:
                     fw.write('\t'.join(['Sample'] + order['mono']) + '\n')
                     for cr, v2 in v1.items():
                         fw.write(cr + '\t' + '\t'.join(list(map(str, [v2[x] for x in order['mono']]))) + '\n')
@@ -169,13 +169,13 @@ def output(results, outputbase):
                 for o, v0 in v00.items():
                     if o == 'nr':
                         for lib, v1 in v0.items():
-                            with open(generate_outputname(outputbase, lib)) +  f'.{k}_d{d}_nr', 'w') as fw:
+                            with open(generate_outputname(outputbase, lib) +  f'.{k}_d{d}_nr', 'w') as fw:
                                 fw.write('\t'.join(['Sample'] + order['nr']) + '\n')
                                 for cr, v2 in v1.items()
                                     fw.write(cr + '\t' + '\t'.join(list(map(str, [v2[x] for x in order['nr']]))) + '\n')
                     else:
                         for lib, v1 in v0.items():
-                            with open(generate_outputname(outputbase, lib)) +  f'.{k}_d{d}_rn', 'w') as fw:
+                            with open(generate_outputname(outputbase, lib) +  f'.{k}_d{d}_rn', 'w') as fw:
                                 fw.write('\t'.join(['Sample'] + order['rn']) + '\n')
                                 for cr, v2 in v1.items():
                                     fw.write(cr + '\t' + '\t'.join(list(map(str, [v2[x] for x in order['rn']]))) + '\n')
@@ -183,19 +183,19 @@ def output(results, outputbase):
             for o, v0 in v.items():
                 if o == 'nnr':
                     for lib, v1 in v0.items():
-                        with open(generate_outputname(outputbase, lib)) + '.trinuc_nnr', 'w') as fw:
+                        with open(generate_outputname(outputbase, lib) + '.trinuc_nnr', 'w') as fw:
                             fw.write('\t'.join(['Sample'] + order['nnr']) + '\n')
                             for cr, v2 in v1.items():
                                 fw.write(cr + '\t' + '\t'.join(list(map(str, [v2[x] for x in order['nnr']]))) + '\n')
                 elif o=='nrn':
                     for lib, v1 in v0.items():
-                        with open(generate_outputname(outputbase, lib)) + '.trinuc_nrn', 'w') as fw:
+                        with open(generate_outputname(outputbase, lib) + '.trinuc_nrn', 'w') as fw:
                             fw.write('\t'.join(['Sample'] + order['nrn']) + '\n')
                             for cr, v2 in v1.items():
                                 fw.write(cr + '\t' + '\t'.join(list(map(str, [v2[x] for x in order['nrn']]))) + '\n')
                 else:
                     for lib, v1 in v0.items():
-                        with open(generate_outputname(outputbase, lib)) + '.trinuc_rnn', 'w') as fw:
+                        with open(generate_outputname(outputbase, lib) + '.trinuc_rnn', 'w') as fw:
                             fw.write('\t'.join(['Sample'] + order['rnn']) + '\n')
                             for cr, v2 in v1.items():
                                 fw.write(cr + '\t' + '\t'.join(list(map(str, [v2[x] for x in order['rnn']]))) + '\n')
