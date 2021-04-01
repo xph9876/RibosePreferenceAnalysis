@@ -89,7 +89,7 @@ def draw(df, labels, output, no_annot):
     label_width = len(labels[0]) * font_size + 0.2
     sample_height = longest * font_size
     title_height = 0.3
-    colorbar_width = 1
+    colorbar_width = 1.5
     width = len(samples) * cell_width[nbases] + label_width + colorbar_width 
     height = 4 ** nbases * cell_height[nbases] + sample_height + title_height
     fig, ax = plt.subplots(figsize=(width, height))
