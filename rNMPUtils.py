@@ -171,7 +171,7 @@ def output(results, outputbase):
                         for lib, v1 in v0.items():
                             with open(generate_outputname(outputbase, lib) +  f'.{k}_d{d}_nr', 'w') as fw:
                                 fw.write('\t'.join(['Sample'] + order['nr']) + '\n')
-                                for cr, v2 in v1.items()
+                                for cr, v2 in v1.items():
                                     fw.write(cr + '\t' + '\t'.join(list(map(str, [v2[x] for x in order['nr']]))) + '\n')
                     else:
                         for lib, v1 in v0.items():
