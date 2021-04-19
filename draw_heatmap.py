@@ -24,7 +24,7 @@ def load_data(data):
         labels = list(rNMPs)
     elif nbase == 2:
         rNMP_loc = 1 - features.index('CA')//4
-        labels = list(it.product(dNMPs, rNMPs))
+        labels = list(it.product(rNMPs, dNMPs))
         if rNMP_loc == 0:
             labels = [x[0] + x[1] for x in labels]
         else:
