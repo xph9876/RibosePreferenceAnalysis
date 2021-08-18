@@ -2,7 +2,18 @@
 
 import argparse
 import sys
-from collections import defaultdict
+
+# load bg
+def load_bg(fr):
+    fea = fr.readline().rstrip('\n').split('\t')
+    bg = {}
+    for l in fr:
+        ws =l.rstrip('\n').split('\t')
+        if len(ws) > 1:
+            bg[ws[0]] = {}
+            for i in range(1, len(ws)):
+                bg[ws[0]][fea[i]] = float(ws[i])
+    return bg
 
 
 def main():
@@ -13,34 +24,27 @@ def main():
     parser.add_argument('-o', type=argparse.FileType('w'), default=sys.stdout, help='Output to file.')
     parser.add_argument('--group_len', default=0, type=int, choices=[0,4,16], help='Number of rows of which the sum is 1, [4,16,0]." + \
                         " if 0 is selected, the sum of all rows would be 1. default = 0')
-    parser.add_argument('--name', default='saccer', help='Name of chromosome in background frequency used for normalization, default = saccer')
     args = parser.parse_args()
 
-    name = args.bg.readline().rstrip('\n').split()[1:]
-
-    # bg[species][di/tri] = freq
-    bg = defaultdict(dict)
-    for l in args.bg:
-        ws = l.rstrip('\n').split()
-        for i in range(1,len(ws)):
-            bg[ws[0]][name[i-1]] = float(ws[i])
+    # load bg
+    bg = load_bg(args.bg)
 
     # header
     l = args.raw.readline()
     args.o.write(l)
-    di = l.rstrip('\n').split('\t')
+    fea = l.rstrip('\n').split('\t')
 
     # normalize
     for l in args.raw:
         ws = l.split('\t')
-        if len(ws) != len(di):
+        if len(ws) != len(fea):
             continue
         # normalize freq
         freq = []
-        sp = args.name
+        sp = ws[0]
         try:
             for i in range(1, len(ws)):
-                freq.append(float(ws[i])/bg[sp][di[i]])
+                freq.append(float(ws[i])/bg[sp][fea[i]])
         except KeyError:
             sys.exit('[ERROR] Cannot find chrom {} in background file'.format(sp))
         # sum to 1
@@ -56,9 +60,7 @@ def main():
             if s[i] == 0:
                 s[i] = 2**32
         args.o.write(ws[0] + '\t' + '\t'.join([str(freq[i]/s[i]) for i in range(len(freq))]) + '\n')
-
-
-    print('Done!')
+    print ('Done!')
 
 
 if __name__ == '__main__':

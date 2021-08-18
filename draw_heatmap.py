@@ -73,7 +73,7 @@ def add_bg_freq(labels, group_size, fr, chrom):
 
 
 # draw heatmaps
-def draw(df, labels, output, no_annot):
+def draw(df, labels, output, no_annot, palette):
     # size parameters
     cell_height = {1:1, 2:0.6, 3:0.3}
     cell_width = {1:1, 2:0.6, 3:0.6}
@@ -104,7 +104,7 @@ def draw(df, labels, output, no_annot):
         cmax = 0.125
     
     # draw heatmap
-    sns.heatmap(df.T, vmin=0, vmax=cmax,center=cmax*0.45, ax=ax, annot=(not no_annot), annot_kws={"size":font_sizes_in_cell[nbases]})
+    sns.heatmap(df.T, vmin=0, vmax=cmax,center=cmax*0.45, ax=ax, annot=(not no_annot), cmap=palette, annot_kws={"size":font_sizes_in_cell[nbases]})
 
     # title and axis
     ax.set_xticklabels(samples, rotation='vertical', size=font_size*100)
@@ -131,6 +131,7 @@ def main():
     parser.add_argument('-b', type=argparse.FileType('r'), help='Select background file. If a file is selected, the background percentage is added to labels.')
     parser.add_argument('--background_chrom', default='chrM', help='Chromosome name of background file, default = chrM, use with -b')
     parser.add_argument('--no_annot', action='store_true', help='Hide percentage annotation in each cell')
+    parser.add_argument('--palette', default='icefire', choices={'icefire', 'vlag'}, help='Define the palette used for the heatmap')
     args = parser.parse_args()
 
 
@@ -146,7 +147,7 @@ def main():
         labels = add_bg_freq(labels, group_size, args.b, args.background_chrom)
 
     # draw heatmaps
-    draw(df, labels, args.o, args.no_annot)
+    draw(df, labels, args.o, args.no_annot, args.palette)
     print(f'Heatmap is saved to {args.o}!')
 
 if __name__ == '__main__':
