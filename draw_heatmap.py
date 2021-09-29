@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import itertools as it
 from collections import defaultdict
+from matplotlib.ticker import FixedLocator
 
 
 # read data and check it is mono, di or tri nucleotide
@@ -117,6 +118,8 @@ def draw(df, labels, output, no_annot, palette):
     color_labels = cax.get_ymajorticklabels()
     color_labels_texts = [i.get_text() for i in color_labels]
     color_labels_texts[-1] += ' - 1'
+    tick_loc = cax.get_yticks().tolist()
+    cax.yaxis.set_major_locator(FixedLocator(tick_loc))
     cax.set_yticklabels(color_labels_texts, fontsize=font_size*100)
 
     # show or save
