@@ -82,7 +82,8 @@ Except Python3 standard libraries, the following packages are needed to run the 
    1. __-b B__  Select background file. If a file is selected, the background percentage is added to labels.
    1. __--background_chrom BACKGROUND_CHROM__  Chromosome name of background file, default = chrM
    1. __--no_annot__  Hide percentage annotation in each cell.
-   
+   1. __--palette {icefire, vlag}__  Define color palette for heatmap.
+    
 ## License
 
 This software is under GNU GPL v3.0 license
