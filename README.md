@@ -4,7 +4,7 @@ Preference analysis for ribose-seq data
 This script is used for preference analysis of rNMP incorporation data generated from _ribose-seq_ protocol and Ribose-Map software. The neighbor of incorporated rNMP keeps certain preference in a specific species. This is because the surrounding dNMPs could affect the probability of rNMP misincorporation by replicative polymerases. This software is designed to reveal this preference.
 
 ## Citation
-Balachander, S., Gombolay, A. L., Yang, T., Xu, P., Newnam, G., Keskin, H., El-Sayed, W., Bryksin, A. V., Tao, S., Bowen, N. E., Schinazi, R. F., Kim, B., Koh, K. D., Vannberg, F. O., & Storici, F. (2020). Ribonucleotide incorporation in yeast genomic DNA shows preference for cytosine and guanosine preceded by deoxyadenosine. _Nature communications, 11_(1), 2447. https://doi.org/10.1038/s41467-020-16152-5
+Xu, P., & Storici, F. (2021). RibosePreferenceAnalysis: Analyzing the preference of rNMPs embedded in genomic DNA. _Software Impacts_, 10, 100149. https://doi.org/10.1016/J.SIMPA.2021.100149
 
 ## Dependency
 
@@ -82,7 +82,7 @@ Except Python3 standard libraries, the following packages are needed to run the 
    1. __-b B__  Select background file. If a file is selected, the background percentage is added to labels.
    1. __--background_chrom BACKGROUND_CHROM__  Chromosome name of background file, default = chrM
    1. __--no_annot__  Hide percentage annotation in each cell.
-   1. __--palette {icefire, vlag}__  Define color palette for heatmap.
+   1. __--palette Palette__  Define Seaborn color palette for heatmap.
     
 ## License
 
