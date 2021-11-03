@@ -3,6 +3,7 @@
 from collections import defaultdict
 import argparse
 import sys
+import itertools as it
 
 # reversecomplement
 def rc(s):
@@ -24,7 +25,7 @@ def main():
     args = parser.parse_args()
 
     if args.mono and args.trinuc:
-        sys.exit('[ERROR] Can only count mononucleotide or trinucleotide!')
+        sys.exit('[ERROR] Can only count mono-, dinuc- or tri-nucleotide!')
 
     # count
     data = defaultdict(lambda : defaultdict(int))
@@ -42,7 +43,7 @@ def main():
             l = cache + l
             for i in range(len(l)-2):
                 data[chrom][l[i:i+3]] += 1
-            cache = l[-2]
+            cache = l[-2:]
         else:
             l = cache + l
             for i in range(len(l)-args.d):
@@ -55,34 +56,26 @@ def main():
         for kmer, count in v.items():
             result[chrom][kmer.upper()] += count
 
-    # generate nuc
-    base = ['A','C','G','T']
+    # generate kmer list
+    bases = 'ACGT'
     if args.mono:
-        nuc = base
+        nuc = list(bases)
     elif args.trinuc:
-        nuc = []
-        for i in base:
-            for j in base:
-                for k in base:
-                    nuc.append(i+j+k)
+        nuc = [''.join(x) for x in it.product(bases, repeat=3)]
     else:
-        nuc = []
-        for i in base:
-            for j in base:
-                nuc.append(i+j)
+        nuc = [''.join(x) for x in it.product(bases, repeat=2)]
 
-    # single strand
+    # Add opposite strand for both strands
     if not args.s:
         for chrom, v in data.items():
             for n, count in v.items():
-                nu = n.upper()
-                if nu in nuc:
-                    result[chrom][rc(nu)] += count
+                if n.upper() in nuc:
+                    result[chrom][rc(n.upper())] += count
 
     # output
     args.o.write('Sample\t' + '\t'.join(nuc) + '\n')
-    for k in sorted(result.keys()):
-        args.o.write('{}\t'.format(k) + '\t'.join([str(result[k][i]) for i in nuc]) + '\n')
+    for chrom in sorted(result.keys()):
+        args.o.write(f'{chrom}\t' + '\t'.join([str(result[chrom][kmer]) for kmer in nuc]) + '\n')
     print('Done!')
 
 if __name__ == '__main__':
