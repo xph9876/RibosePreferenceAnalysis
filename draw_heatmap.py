@@ -134,7 +134,7 @@ def main():
     parser.add_argument('-b', type=argparse.FileType('r'), help='Select background file. If a file is selected, the background percentage is added to labels.')
     parser.add_argument('--background_chrom', default='chrM', help='Chromosome name of background file, default = chrM, use with -b')
     parser.add_argument('--no_annot', action='store_true', help='Hide percentage annotation in each cell')
-    parser.add_argument('--palette', default='icefire', help='Define the palette used for the heatmap')
+    parser.add_argument('--palette', default='icefire', help='Define the palette used for the heatmap, icefire or RdBu_r')
     args = parser.parse_args()
 
 
