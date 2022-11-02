@@ -45,8 +45,14 @@ def load_data(data):
 # determine the size group from df
 def determine_group_size(df):
     data = list(df.iloc[0])
-    # add 0.1 to deal with precision issue
-    return int(len(data)/sum(data) + 0.1)
+    u = len(data) / sum(data)
+    if u > 32:
+        u = 64
+    elif u > 8:
+        u = 16
+    else:
+        u = 4
+    return u
 
 
 # add background frequency to label
@@ -65,12 +71,17 @@ def add_bg_freq(labels, group_size, fr, chrom):
     labels = [[x, freqs[x.replace('U','T')]] for x in labels]
     # sum to 1
     s = []
-    for i in range(int(len(labels)/group_size)):
-        s += [sum([x[1] for x in labels[i*group_size:i*group_size+group_size]])]*group_size
+    for i in range(len(labels)//group_size):
+        unit = sum([x[1] for x in labels[i*group_size:i*group_size+group_size]])
+        s += [unit]*group_size
     for j in range(len(labels)):
-        labels[j][1] /= (s[j]/100)
-    return [f'{x[1]:.2f}% {x[0]}' for x in labels]
-
+        if not s[j]:
+            labels[j][1] = 'N/A'
+        else:
+            labels[j][1] /= (s[j]/100)
+            labels[j][1] = f'{labels[j][1]:.2f}%'
+    labels = [f'{x[1]} {x[0]}' for x in labels]
+    return labels
 
 
 # draw heatmaps
@@ -134,7 +145,8 @@ def main():
     parser.add_argument('-b', type=argparse.FileType('r'), help='Select background file. If a file is selected, the background percentage is added to labels.')
     parser.add_argument('--background_chrom', default='chrM', help='Chromosome name of background file, default = chrM, use with -b')
     parser.add_argument('--no_annot', action='store_true', help='Hide percentage annotation in each cell')
-    parser.add_argument('--palette', default='icefire', help='Define the palette used for the heatmap, icefire or RdBu_r')
+    parser.add_argument('--palette', default='icefire', help='Define the palette used for the heatmap')
+    parser.add_argument('--group_size', default=None, choices={4, 16, 64}, help='Set group size FORCELY to 4, 16, or 64')
     args = parser.parse_args()
 
 
@@ -143,7 +155,10 @@ def main():
 
     # get data and information
     df, labels = load_data(args.DATA)
-    group_size = determine_group_size(df)
+    if not args.group_size:
+        group_size = determine_group_size(df)
+    else:
+        group_size = args.group_size
     
     # read background frequency
     if args.b:

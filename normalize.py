@@ -38,11 +38,12 @@ def main():
         # normalize freq
         freq = []
         sp = args.name
-        try:
-            for i in range(1, len(ws)):
+        assert sp in bg, f'[ERROR] Cannot find chrom {sp} in background file'
+        for i in range(1, len(ws)):
+            if bg[sp][di[i]] == 0:
+                freq.append(0)
+            else:
                 freq.append(float(ws[i])/bg[sp][di[i]])
-        except KeyError:
-            sys.exit('[ERROR] Cannot find chrom {} in background file'.format(sp))
         # sum to 1
         s = []
         if args.group_len == 0:
