@@ -83,6 +83,14 @@ def add_bg_freq(labels, group_size, fr, chrom):
     labels = [f'{x[1]} {x[0]}' for x in labels]
     return labels
 
+# remove empty rows from df and labels
+def remove_empty(df, labels):
+    id_drop = [
+        i for i, x in enumerate(labels) if x.startswith('0.00%') or x.find('N/A') != -1
+    ]
+    dfn = df.drop(columns=[df.columns[x] for x in id_drop])
+    labelsn = [x for i, x in enumerate(labels) if i not in id_drop]
+    return dfn, labelsn
 
 # draw heatmaps
 def draw(df, labels, output, no_annot, palette):
@@ -103,7 +111,7 @@ def draw(df, labels, output, no_annot, palette):
     title_height = 0.3
     colorbar_width = 2
     width = len(samples) * cell_width[nbases] + label_width + colorbar_width 
-    height = 4 ** nbases * cell_height[nbases] + sample_height + title_height
+    height = len(labels) * cell_height[nbases] + sample_height + title_height
     fig, ax = plt.subplots(figsize=(width, height))
     plt.subplots_adjust(left=label_width/width, right=1-colorbar_width/width, \
         top=1-title_height/height, bottom=sample_height/height)
@@ -147,6 +155,7 @@ def main():
     parser.add_argument('--no_annot', action='store_true', help='Hide percentage annotation in each cell')
     parser.add_argument('--palette', default='icefire', help='Define the palette used for the heatmap')
     parser.add_argument('--group_size', default=None, choices={4, 16, 64}, help='Set group size FORCELY to 4, 16, or 64')
+    parser.add_argument('--remove_empty_row', action='store_true', help='Remove empty rows in heatmap')
     args = parser.parse_args()
 
 
@@ -163,6 +172,10 @@ def main():
     # read background frequency
     if args.b:
         labels = add_bg_freq(labels, group_size, args.b, args.background_chrom)
+
+    # remove empty rows
+    if args.remove_empty_row:
+        df, labels = remove_empty(df, labels)
 
     # draw heatmaps
     draw(df, labels, args.o, args.no_annot, args.palette)
