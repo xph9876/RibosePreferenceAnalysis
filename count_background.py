@@ -22,6 +22,7 @@ def main():
     parser.add_argument('-s', action='store_true', help='Count only one strand')
     parser.add_argument('--mono', action='store_true', help='Count mono nucleotide instead')
     parser.add_argument('--trinuc', action='store_true', help='Count trinucleotide instead')
+    parser.add_argument('--allow_dup_chroms', action='store_true', help='Sum up all counts of chromosomes with the same name. By default, only the first one is counted')
     args = parser.parse_args()
 
     if args.mono and args.trinuc:
@@ -30,11 +31,17 @@ def main():
     # count
     data = defaultdict(lambda : defaultdict(int))
     cache = ''
+    seen = set()
     for l in args.FASTA:
         l = l.rstrip('\n')
         if l[0] == '>':
             chrom = l[1:]
-            print('Start counting {}!'.format(chrom))
+            if chrom in seen and not args.allow_dup_chroms:
+                print('Skip duplicate chromosome {}!'.format(chrom))
+                chrom = None
+            else:
+                seen.add(chrom)
+                print('Start counting {}!'.format(chrom))
             cache = ''
         elif args.mono:
             for i in l:
@@ -71,6 +78,9 @@ def main():
             for n, count in v.items():
                 if n.upper() in nuc:
                     result[chrom][rc(n.upper())] += count
+    
+    # remove skipped choromosomes
+    del result[None]
 
     # output
     args.o.write('Sample\t' + '\t'.join(nuc) + '\n')
