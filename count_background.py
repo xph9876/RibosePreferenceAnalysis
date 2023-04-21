@@ -80,7 +80,8 @@ def main():
                     result[chrom][rc(n.upper())] += count
     
     # remove skipped choromosomes
-    del result[None]
+    if None in result:
+        del result[None]
 
     # output
     args.o.write('Sample\t' + '\t'.join(nuc) + '\n')
