@@ -7,7 +7,7 @@ import pandas as pd
 
 
 # generate dataframe from tsv file
-def generate_df(fr, remove_RE):
+def generate_df(fr):
     header = fr.readline().rstrip('\n').split('\t')
     header[-1] = 'U'
     data = []
@@ -16,12 +16,8 @@ def generate_df(fr, remove_RE):
         if len(ws) != len(header):
             continue
         words = ws[0].split('-')
-        if remove_RE:
-            cate = '-'.join(words[:-2])
-            name = words[-2]
-        else:
-            cate = '-'.join(words[:-1])
-            name = words[-1]
+        cate = '-'.join(words[1:])
+        name = words[0]
         for i in range(1, len(ws)):
             data.append([name, cate, header[i], float(ws[i])])
     df = pd.DataFrame(data, columns=['Library','Genotype', 'rNMP', 'Values'])
@@ -31,7 +27,6 @@ def main():
     parser = argparse.ArgumentParser(description='Generate barplot with datapoints from a mono tsv file')
     parser.add_argument('tsv', type=argparse.FileType('r'), help='Input tsv file')
     parser.add_argument('--legend', action='store_true', help='Draw figure legend on the plots')
-    parser.add_argument('--remove_RE', action='store_true', help='Remove RE label in input file')
     parser.add_argument('-o', help='Output plot name')
     args = parser.parse_args()
 
@@ -42,7 +37,7 @@ def main():
     pal = ['#E31A1C', '#1F78B4', '#FFFFB9', '#33A02C']
 
     # generate define
-    df = generate_df(args.tsv, args.remove_RE)
+    df = generate_df(args.tsv)
 
     # draw
     sns.set(font_scale=2.3, style='ticks')
