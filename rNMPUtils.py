@@ -5,6 +5,8 @@ def rc(s):
     c = {'A':'T', 'C':'G', 'G':'C', 'T':'A', 'N':'N'}
     r = ''
     for i in s:
+        if i not in c:
+            return ''
         r = c[i] + r
     return r
 
