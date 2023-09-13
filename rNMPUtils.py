@@ -20,7 +20,7 @@ def get_ribo_position(frs, use_frequency):
         libs.append(fr.name.split('/')[-1].split('.')[0])
         for l in fr:
             ws = l.rstrip('\n').split('\t')
-            if len(ws) != 6:
+            if len(ws) < 6:
                 continue
             if use_frequency:
                 pos[(ws[0], int(ws[2]), ws[5])][fridx] += float(ws[3])
@@ -40,18 +40,13 @@ def get_ribo(ribos, libs, gr, mono, dinuc, trinuc, dist):
     result = {}
     if mono:
         # result['mono'][lib][chrom][A] = count
-        result['mono'] = defaultdict(lambda : defaultdict(lambda : defaultdict(float)))
+        result['mono'] = {}
     if dinuc:
         result['dinuc'] = {}
         for i in dist:
-            result['dinuc'][i] = {}
-            result['dinuc'][i]['nr'] = defaultdict(lambda : defaultdict(lambda : defaultdict(float)))
-            result['dinuc'][i]['rn'] = defaultdict(lambda : defaultdict(lambda : defaultdict(float)))
+            result['dinuc'][i] = {'nr':{}, 'rn':{}}
     if trinuc:
-        result['trinuc'] = {}
-        result['trinuc']['nnr'] = defaultdict(lambda : defaultdict(lambda : defaultdict(float)))
-        result['trinuc']['nrn'] = defaultdict(lambda : defaultdict(lambda : defaultdict(float)))
-        result['trinuc']['rnn'] = defaultdict(lambda : defaultdict(lambda : defaultdict(float)))
+        result['trinuc'] = {'nnr':{}, 'nrn':{}, 'rnn':{}}
     # calculate cache length:
     cache_len = 0
     if trinuc:
@@ -140,6 +135,10 @@ def calc_chrom(cr, genome, ribos, libs, mono, dinuc, trinuc, dist, result):
 # add ribos for one entry
 def add_ribo(nuc, libs, counts, cr, result):
     for i in range(len(counts)):
+        if libs[i] not in result:
+            result[libs[i]] = {}
+        if cr not in result[libs[i]]:
+            result[libs[i]][cr] = defaultdict(float)
         if counts[i]:
             result[libs[i]][cr][nuc] += counts[i]
 

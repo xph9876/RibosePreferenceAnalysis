@@ -5,13 +5,13 @@ from rNMPUtils  import *
 
 def main():
     # argparse
-    parser = argparse.ArgumentParser(description='Count dinucleotide frequency of ribose')
-    parser.add_argument('GENOME', type=argparse.FileType('r'), help='Reference genome')
-    parser.add_argument('BED', type=argparse.FileType('r'), nargs='+', help='BED file of ribose, of which the fourth column is the frequency')
-    parser.add_argument('-f', action='store_true', help='Use fourth column of bed file as frequency')
+    parser = argparse.ArgumentParser(description='Count context frequency of rNMP incorporation')
+    parser.add_argument('GENOME', type=argparse.FileType('r'), help='Reference genome FASTA')
+    parser.add_argument('BED', type=argparse.FileType('r'), nargs='+', help='BED file of rNMP incorporation')
+    parser.add_argument('-f', action='store_true', help='Use fourth column of bed file as rNMP frequency')
     parser.add_argument('-m', action='store_true', help='Count mononucleotide frequency')
     parser.add_argument('-d', action='store_true', help='Count dinucleotide frequency')
-    parser.add_argument('--dist', default=[1], type=int, nargs='+', help='distance of dinuc pairs')
+    parser.add_argument('--dist', default=[1], type=int, nargs='+', help='distance between dinucleotides')
     parser.add_argument('-t', action='store_true', help='Count trinucleotide frequency')
     parser.add_argument('-o', default='', help='Output basename')
     args = parser.parse_args()
