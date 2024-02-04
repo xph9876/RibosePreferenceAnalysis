@@ -1,4 +1,5 @@
 from collections import defaultdict
+import os
 
 # complement
 def rc(s):
@@ -206,6 +207,8 @@ def output(results, outputbase):
 def generate_outputname(outputbase, lib):
     if not outputbase:
         return lib
+    if os.path.isdir(outputbase):
+        return outputbase + '/' + lib
     return outputbase + '_' + lib
 
 
